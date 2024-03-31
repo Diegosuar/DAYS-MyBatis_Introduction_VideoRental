@@ -7,8 +7,10 @@ package edu.unisabana.dyas.samples.entities;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.LinkedList;
 
+import org.apache.ibatis.annotations.Param;
+
+@SuppressWarnings("unused")
 public class Cliente implements Serializable{
     
     private String nombre;
@@ -42,6 +44,8 @@ public class Cliente implements Serializable{
         this.vetado = false;
         this.rentados = new ArrayList<>();
     }
+
+
 
            
     public String getNombre() {

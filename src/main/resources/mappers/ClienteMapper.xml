@@ -5,6 +5,67 @@
   
 <mapper namespace="edu.unisabana.dyas.sampleprj.dao.mybatis.mappers.ClienteMapper">
 
+<select parameterType="map" id="consultarClientes" resultMap="ClienteResult">
+		SELECT 
+    c.nombre AS cliente_nombre,
+    c.documento AS cliente_documento,
+    c.telefono AS cliente_telefono,
+    c.direccion AS cliente_direccion,
+    c.email AS cliente_email,
+    c.vetado AS cliente_vetado,
+    ir.id AS itemrentado_id,
+    ir.fechainiciorenta AS itemrentado_fechainiciorenta,
+    ir.fechafinrenta AS itemrentado_fechafinrenta,
+    i.id AS item_id,
+    i.nombre AS item_nombre,
+    i.descripcion AS item_descripcion,
+    i.fechalanzamiento AS item_fechalanzamiento,
+    i.tarifaxdia AS item_tarifaxdia,
+    i.formatorenta AS item_formatorenta,
+    i.genero AS item_genero,
+    ti.id AS tipoitem_id,
+    ti.descripcion AS tipoitem_descripcion
+FROM 
+    VI_CLIENTES AS c
+LEFT JOIN 
+    VI_ITEMRENTADO AS ir ON c.documento = ir.CLIENTES_documento
+LEFT JOIN 
+    VI_ITEMS AS i ON ir.ITEMS_id = i.id
+LEFT JOIN 
+    VI_TIPOITEM AS ti ON i.TIPOITEM_id = ti.id;
+
+</select>
+<select parameterType="map" id="consultarCliente" resultMap="ClienteResult">
+    SELECT * FROM VI_CLIENTES WHERE id = #{idcli}
+</select>
+
+<resultMap type='Cliente' id='ClienteResult'>
+    <id property='documento' column='documento'/>
+    <result property='nombre' column='nombre'/>
+    <result property='telefono' column='telefono'/>
+    <result property='direccion' column='direccion'/>
+    <result property='email' column='email'/>
+    <result property='vetado' column='vetado'/>
+    <collection property='itemsRentados' ofType='ItemRentado'>
+        <result property='id' column='item_rentado_id'/>
+        <result property='fechaInicioRenta' column='fechainiciorenta'/>
+        <result property='fechaFinRenta' column='fechafinrenta'/>
+        <!-- Aquí puedes agregar más propiedades de ItemRentado si es necesario -->
+        <association property='item' javaType='Item'>
+            <id property='id' column='item_id'/>
+            <result property='nombre' column='item_nombre'/>
+            <result property='descripcion' column='item_descripcion'/>
+            <!-- Agregar más propiedades de Item según sea necesario -->
+            <association property='tipoItem' javaType='TipoItem'>
+                <id property='id' column='tipo_item_id'/>
+                <result property='descripcion' column='tipo_item_descripcion'/>
+                <!-- Agregar más propiedades de TipoItem si es necesario -->
+            </association>
+        </association>
+    <collection property='itemsRentados' ofType='ItemRentado' resultMap='ItemRentadoResult'></collection>
+
+    </collection>
+</resultMap>
 
           	
 </mapper>

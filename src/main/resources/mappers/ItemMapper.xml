@@ -5,7 +5,24 @@
   
 <mapper namespace="edu.unisabana.dyas.sampleprj.dao.mybatis.mappers.ItemMapper">
 
+<!-- ItemMapper.xml -->
+    <resultMap type='Item' id='ItemResult'>
+        <id property='id' column='item_id'/>
+        <result property='nombre' column='item_nombre'/>
+        <result property='descripcion' column='item_descripcion'/>
+        <result property='fechaLanzamiento' column='item_fecha_lanzamiento'/>
+        <result property='tarifaXDia' column='item_tarifa_x_dia'/>
+        <result property='formatoRenta' column='item_formato_renta'/>
+        <result property='genero' column='item_genero'/>
+        <!-- Agregar más propiedades de Item según sea necesario -->
+        <association property='tipoItem' javaType='TipoItem'>
+            <id property='id' column='tipo_item_id'/>
+            <result property='descripcion' column='tipo_item_descripcion'/>
+            <!-- Agregar más propiedades de TipoItem si es necesario -->
+        </association>
+    </resultMap>
 
-    
-    
+    <!-- Aquí pueden ir otros mapeos de consultas y sentencias SQL específicas para Item -->
+
 </mapper>
+

@@ -6,6 +6,14 @@
 <mapper namespace="edu.unisabana.dyas.sampleprj.dao.mybatis.mappers.TipoItemMapper">
 
     
+<!-- TipoItemMapper.xml -->
+    <resultMap type='TipoItem' id='TipoItemResult'>
+        <id property='id' column='tipo_item_id'/>
+        <result property='descripcion' column='tipo_item_descripcion'/>
+        <!-- Agregar más propiedades de TipoItem si es necesario -->
+    </resultMap>
+
+    <!-- Aquí pueden ir otros mapeos de consultas y sentencias SQL específicas para TipoItem -->
 
                 
 </mapper>
