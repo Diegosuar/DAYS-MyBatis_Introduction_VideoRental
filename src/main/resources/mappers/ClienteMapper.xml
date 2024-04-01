@@ -44,38 +44,14 @@ LEFT JOIN
 </insert>
 
 
-<resultMap type='ItemRentado' id="ItemRentadoResult">
-    <association property="item" resultMap="ItemResult"/>
-</resultMap>
-
-
-
-<resultMap type='Cliente' id='ClienteResult'>
-    <id property='documento' column='documento'/>
-    <result property='nombre' column='nombre'/>
-    <result property='telefono' column='telefono'/>
-    <result property='direccion' column='direccion'/>
-    <result property='email' column='email'/>
-    <result property='vetado' column='vetado'/>
-    <collection property='itemsRentados' ofType='ItemRentado'>
-        <result property='id' column='item_rentado_id'/>
-        <result property='fechaInicioRenta' column='fechainiciorenta'/>
-        <result property='fechaFinRenta' column='fechafinrenta'/>
-        
-        <association property='item' javaType='Item'>
-            <id property='id' column='item_id'/>
-            <result property='nombre' column='item_nombre'/>
-            <result property='descripcion' column='item_descripcion'/>
-            
-            <association property='tipoItem' javaType='TipoItem'>
-                <id property='id' column='tipo_item_id'/>
-                <result property='descripcion' column='tipo_item_descripcion'/>
-                
-            </association>
-        </association>
-    <collection property='itemsRentados' ofType='ItemRentado' resultMap='ItemRentadoResult'></collection>
-
-    </collection>
+<resultMap type="Cliente" id="ClienteResult">
+    <id property="documento" column="documento"/>
+    <result property="nombre" column="nombre"/>
+    <result property="telefono" column="telefono"/>
+    <result property="direccion" column="direccion"/>
+    <result property="email" column="email"/>
+    <result property="vetado" column="vetado"/>
+    <collection property="itemsRentados" ofType="ItemRentado" resultMap="ItemRentadoResult"/>
 </resultMap>
 
 </mapper>

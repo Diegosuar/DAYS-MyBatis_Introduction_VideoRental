@@ -5,33 +5,15 @@
   
 <mapper namespace="edu.unisabana.dyas.sampleprj.dao.mybatis.mappers.ItemMapper">
 
-
-    <resultMap type='Item' id='ItemResult'>
-        <id property='id' column='item_id'/>
-        <result property='nombre' column='item_nombre'/>
-        <result property='descripcion' column='item_descripcion'/>
-        <result property='fechaLanzamiento' column='item_fecha_lanzamiento'/>
-        <result property='tarifaXDia' column='item_tarifa_x_dia'/>
-        <result property='formatoRenta' column='item_formato_renta'/>
-        <result property='genero' column='item_genero'/>
-  
-        <association property='tipoItem' javaType='TipoItem'>
-            <id property='id' column='tipo_item_id'/>
-            <result property='descripcion' column='tipo_item_descripcion'/>
-           
-        </association>
-    </resultMap>
-
-<insert parameterType="map" id="insertarItem">
-    INSERT INTO items (id, nombre, descripcion) VALUES (#{item.id}, #{item.nombre}, #{item.descripcion})
-</insert>
-
-
-<resultMap type='edu.unisabana.dyas.samples.entities.Item' id="ItemResult">
-    <id property="id" column="id" />
-    <result property="nombre" column="nombre" />
-    <result property="descripcion" column="descripcion" />
-    
+<resultMap type="Item" id="ItemResult">
+    <id property="id" column="ID_ITEM"/>
+    <result property="nombre" column="NOMBRE_ITEM"/>
+    <result property="descripcion" column="DESCRIPCION_ITEM"/>
+    <result property="fechaLanzamiento" column="FECHA_LANZAMIENTO"/>
+    <result property="tarifaXDia" column="TARIFA_X_DIA"/>
+    <result property="formatoRenta" column="FORMATO_RENTA"/>
+    <result property="genero" column="GENERO"/>
+    <association property="tipoItem" javaType="TipoItem" resultMap="TipoItemResult"/>
 </resultMap>
 
 <select parameterType="int" id="consultarItem" resultMap="ItemResult">
