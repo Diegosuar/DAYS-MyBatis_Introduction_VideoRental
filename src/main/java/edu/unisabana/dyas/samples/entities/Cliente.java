@@ -10,9 +10,9 @@ import java.util.ArrayList;
 
 import org.apache.ibatis.annotations.Param;
 
-@SuppressWarnings("unused")
+
 public class Cliente implements Serializable{
-    
+
     private String nombre;
     private long documento;
     private String telefono;
@@ -20,7 +20,10 @@ public class Cliente implements Serializable{
     private String email;
     private boolean vetado;
     private ArrayList<ItemRentado> rentados; 
-
+    
+    public interface ClienteMapper {
+        Cliente consultarCliente(@Param("idcli") int id);
+    }
     public Cliente() {
     }
 

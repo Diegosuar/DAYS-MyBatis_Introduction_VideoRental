@@ -5,7 +5,7 @@
   
 <mapper namespace="edu.unisabana.dyas.sampleprj.dao.mybatis.mappers.ItemMapper">
 
-<!-- ItemMapper.xml -->
+
     <resultMap type='Item' id='ItemResult'>
         <id property='id' column='item_id'/>
         <result property='nombre' column='item_nombre'/>
@@ -14,15 +14,34 @@
         <result property='tarifaXDia' column='item_tarifa_x_dia'/>
         <result property='formatoRenta' column='item_formato_renta'/>
         <result property='genero' column='item_genero'/>
-        <!-- Agregar más propiedades de Item según sea necesario -->
+  
         <association property='tipoItem' javaType='TipoItem'>
             <id property='id' column='tipo_item_id'/>
             <result property='descripcion' column='tipo_item_descripcion'/>
-            <!-- Agregar más propiedades de TipoItem si es necesario -->
+           
         </association>
     </resultMap>
 
-    <!-- Aquí pueden ir otros mapeos de consultas y sentencias SQL específicas para Item -->
+<insert parameterType="map" id="insertarItem">
+    INSERT INTO items (id, nombre, descripcion) VALUES (#{item.id}, #{item.nombre}, #{item.descripcion})
+</insert>
+
+
+<resultMap type='edu.unisabana.dyas.samples.entities.Item' id="ItemResult">
+    <id property="id" column="id" />
+    <result property="nombre" column="nombre" />
+    <result property="descripcion" column="descripcion" />
+    
+</resultMap>
+
+<select parameterType="int" id="consultarItem" resultMap="ItemResult">
+    SELECT * FROM items WHERE id = #{id}
+</select>
+
+<select id="consultarItems" resultMap="ItemResult">
+    SELECT * FROM items
+</select>
+
 
 </mapper>
 

@@ -1,17 +1,15 @@
 package edu.unisabana.dyas.samples.services.client;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.SQLException;
-import java.util.List;
-
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
-
 import edu.unisabana.dyas.sampleprj.dao.mybatis.mappers.ClienteMapper;
+import edu.unisabana.dyas.sampleprj.dao.mybatis.mappers.ItemMapper;
 import edu.unisabana.dyas.samples.entities.Cliente;
+import edu.unisabana.dyas.samples.entities.Item;
 
 public class MyBatisExample {
 
@@ -40,19 +38,42 @@ public class MyBatisExample {
      * @param args
      * @throws SQLException 
      */
+    @SuppressWarnings("unused")
     public static void main(String args[]) throws SQLException {
-        SqlSessionFactory sessionfact = getSqlSessionFactory();
+        SqlSessionFactory sessionFactory = getSqlSessionFactory();
 
-        try (SqlSession sqlss = sessionfact.openSession()) {
-            // Obtener el mapper para Cliente
-            ClienteMapper clienteMapper = sqlss.getMapper(ClienteMapper.class);
-            
-            // Ejecutar la consulta para consultar los clientes
-            List<Cliente> clientes = clienteMapper.consultarClientes();
-            
-            // Procesar los resultados
-            for (Cliente cliente : clientes) {
-                System.out.println(cliente);
+        
+        try (SqlSession sqlSession = sessionFactory.openSession()) {
+            // Obtener el mapper de ClienteMapper
+            ClienteMapper clienteMapper = sqlSession.getMapper(ClienteMapper.class);
+
+            // Llamar al método consultarCliente para obtener un cliente
+            Cliente cliente = clienteMapper.consultarCliente(123); // Aquí 123 es el ID del cliente que quieres consultar
+            System.out.println("Cliente consultado: " + cliente);
+
+            // Crear un objeto Item
+            Item item = new Item();
+            item.setId(456); // Asigna el ID deseado
+            item.setNombre("Nombre del Item"); // Asigna el nombre deseado
+            item.setDescrpcion("Descripción del Item"); // Asigna la descripción deseada
+
+            // Obtener el mapper de ItemMapper
+            ItemMapper itemMapper = sqlSession.getMapper(ItemMapper.class);
+
+            // Llamar al método insertarItem para insertar un nuevo item
+            itemMapper.insertarItem(item);
+
+            // Commit de la transacción
+            sqlSession.commit();
+
+            // Verificación de que se ha insertado el item correctamente
+            Item itemInsertado = itemMapper.consultarItem(456); // Consulta el item insertado
+            System.out.println("Item insertado: " + itemInsertado);
+
+            // Llamar al método consultarItems para obtener todos los items
+            System.out.println("Todos los items:");
+            for (final Item item2: itemMapper.consultarItems()) {
+                System.out.println(item);
             }
         } catch (Exception e) {
             e.printStackTrace();

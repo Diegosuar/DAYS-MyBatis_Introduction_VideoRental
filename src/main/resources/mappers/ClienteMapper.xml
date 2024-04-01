@@ -39,6 +39,17 @@ LEFT JOIN
     SELECT * FROM VI_CLIENTES WHERE id = #{idcli}
 </select>
 
+<insert parameterType="map" id="agregarItemRentadoACliente">
+    INSERT INTO item_rentado (cliente_id, item_id, fecha_inicio) VALUES (#{clienteId}, #{itemId}, #{fechaInicio})
+</insert>
+
+
+<resultMap type='ItemRentado' id="ItemRentadoResult">
+    <association property="item" resultMap="ItemResult"/>
+</resultMap>
+
+
+
 <resultMap type='Cliente' id='ClienteResult'>
     <id property='documento' column='documento'/>
     <result property='nombre' column='nombre'/>
@@ -50,16 +61,16 @@ LEFT JOIN
         <result property='id' column='item_rentado_id'/>
         <result property='fechaInicioRenta' column='fechainiciorenta'/>
         <result property='fechaFinRenta' column='fechafinrenta'/>
-        <!-- Aquí puedes agregar más propiedades de ItemRentado si es necesario -->
+        
         <association property='item' javaType='Item'>
             <id property='id' column='item_id'/>
             <result property='nombre' column='item_nombre'/>
             <result property='descripcion' column='item_descripcion'/>
-            <!-- Agregar más propiedades de Item según sea necesario -->
+            
             <association property='tipoItem' javaType='TipoItem'>
                 <id property='id' column='tipo_item_id'/>
                 <result property='descripcion' column='tipo_item_descripcion'/>
-                <!-- Agregar más propiedades de TipoItem si es necesario -->
+                
             </association>
         </association>
     <collection property='itemsRentados' ofType='ItemRentado' resultMap='ItemRentadoResult'></collection>
@@ -67,5 +78,4 @@ LEFT JOIN
     </collection>
 </resultMap>
 
-          	
 </mapper>
