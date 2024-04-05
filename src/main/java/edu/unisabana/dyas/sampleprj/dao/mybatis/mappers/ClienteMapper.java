@@ -2,6 +2,9 @@ package edu.unisabana.dyas.sampleprj.dao.mybatis.mappers;
 
 import java.util.Date;
 import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
+
 import edu.unisabana.dyas.samples.entities.Cliente;
 
 /**
@@ -10,7 +13,7 @@ import edu.unisabana.dyas.samples.entities.Cliente;
  */
 public interface ClienteMapper {
     
-    public Cliente consultarCliente(int id); 
+    public Cliente consultarCliente(@Param("idcli") int id); 
     
     /**
      * Registrar un nuevo item rentado asociado al cliente identificado
@@ -20,10 +23,12 @@ public interface ClienteMapper {
      * @param fechainicio
      * @param fechafin 
      */
-    public void agregarItemRentadoACliente(int id, 
-            int idit, 
-            Date fechainicio,
-            Date fechafin);
+    public void agregarItemRentadoACliente(@Param("idc") int id, 
+            @Param("iditem") int idit, 
+            @Param("fi") Date fechainicio,
+            @Param("ff") Date fechafin);
+
+    public void deleteAll();
 
     /**
      * Consultar todos los clientes

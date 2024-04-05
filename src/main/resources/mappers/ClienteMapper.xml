@@ -28,7 +28,8 @@
     FROM VI_CLIENTES AS c
     LEFT JOIN VI_ITEMRENTADO AS ir ON c.documento = ir.CLIENTES_documento
     LEFT JOIN VI_ITEMS AS i ON ir.ITEMS_id = i.id
-    LEFT JOIN VI_TIPOITEM AS ti ON i.TIPOITEM_id = ti.id;
+    LEFT JOIN VI_TIPOITEM AS ti ON i.TIPOITEM_id = ti.id
+    WHERE documento = #{idcli};
 
 </select>
 
@@ -51,14 +52,14 @@
 </select>
 
 <insert parameterType="map" id="agregarItemRentadoACliente">
-    INSERT INTO VI_ITEMRENTADO (#(idcli),#(iditem),#(fi),#(ff))
+    INSERT INTO VI_ITEMRENTADO (#(idc),#(iditem),#(fi),#(ff))
 </insert>
 
 <resultMap type="Itemrentado" id="ItemRentadoResult">
     <id property="id" column="itemrentado_id"/>
     <result property="fechainiciorenta" column="itemrentado_fechainiciorenta"/>
     <result property="fechafinrenta" column="itemrentado_fechafinrenta"/>
-    <collection property="item" ofType="Item" resultMap="src\main\resources\mappers\ItemMapper.xml"> </collection>
+    <collection property="item" ofType="Item" resultMap="edu.unisabana.dyas.sampleprj.dao.mybatis.mappers.ItemMapper"> </collection>
 </resultMap>
 
 
