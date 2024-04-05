@@ -25,33 +25,41 @@
     i.genero AS item_genero,
     ti.id AS tipoitem_id,
     ti.descripcion AS tipoitem_descripcion
-FROM 
-    VI_CLIENTES AS c
-LEFT JOIN 
-    VI_ITEMRENTADO AS ir ON c.documento = ir.CLIENTES_documento
-LEFT JOIN 
-    VI_ITEMS AS i ON ir.ITEMS_id = i.id
-LEFT JOIN 
-    VI_TIPOITEM AS ti ON i.TIPOITEM_id = ti.id;
+    FROM VI_CLIENTES AS c
+    LEFT JOIN VI_ITEMRENTADO AS ir ON c.documento = ir.CLIENTES_documento
+    LEFT JOIN VI_ITEMS AS i ON ir.ITEMS_id = i.id
+    LEFT JOIN VI_TIPOITEM AS ti ON i.TIPOITEM_id = ti.id;
 
 </select>
+
+<delete id="deleteAll" parameterType="map">
+    DELETE FROM VI_ITEMRENTADO;
+</delete>  
+
+<resultMap type="Cliente" id="ClienteResult">
+    <id property="documento" column="cliente_documento"/>
+    <result property="nombre" column="cliente_nombre"/>
+    <result property="telefono" column="cliente_telefono"/>
+    <result property="direccion" column="cliente_direccion"/>
+    <result property="email" column="cliente_email"/>
+    <result property="vetado" column="cliente_vetado"/>
+    <collection property="itemsRentados" ofType="ItemRentado" resultMap="ItemRentadoResult"/>
+</resultMap>
+
 <select parameterType="map" id="consultarCliente" resultMap="ClienteResult">
-    SELECT * FROM VI_CLIENTES WHERE id = #{idcli}
+    SELECT * FROM VI_CLIENTES WHERE documento = #{idcli}
 </select>
 
 <insert parameterType="map" id="agregarItemRentadoACliente">
-    INSERT INTO item_rentado (cliente_id, item_id, fecha_inicio) VALUES (#{clienteId}, #{itemId}, #{fechaInicio})
+    INSERT INTO VI_ITEMRENTADO (#(idcli),#(iditem),#(fi),#(ff))
 </insert>
 
-
-<resultMap type="Cliente" id="ClienteResult">
-    <id property="documento" column="documento"/>
-    <result property="nombre" column="nombre"/>
-    <result property="telefono" column="telefono"/>
-    <result property="direccion" column="direccion"/>
-    <result property="email" column="email"/>
-    <result property="vetado" column="vetado"/>
-    <collection property="itemsRentados" ofType="ItemRentado" resultMap="ItemRentadoResult"/>
+<resultMap type="Itemrentado" id="ItemRentadoResult">
+    <id property="id" column="itemrentado_id"/>
+    <result property="fechainiciorenta" column="itemrentado_fechainiciorenta"/>
+    <result property="fechafinrenta" column="itemrentado_fechafinrenta"/>
+    <collection property="item" ofType="Item" resultMap="src\main\resources\mappers\ItemMapper.xml"> </collection>
 </resultMap>
+
 
 </mapper>

@@ -8,6 +8,8 @@
 <resultMap type="TipoItem" id="TipoItemResult">
   <id property="id" column="ID_TIPO_ITEM"/>
   <result property="descripcion" column="DESCRIPCION_TIPO_ITEM"/>
+  <association property="item" javaType="Item" resultMap="ItemResult"/>
+
 </resultMap>
                 
 </mapper>

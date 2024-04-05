@@ -14,6 +14,7 @@
     <result property="formatoRenta" column="FORMATO_RENTA"/>
     <result property="genero" column="GENERO"/>
     <association property="tipoItem" javaType="TipoItem" resultMap="TipoItemResult"/>
+    <association property="itemsRentados" javaType="ItemRentado" resultMap="TipoItemResult"/>
 </resultMap>
 
 <select parameterType="int" id="consultarItem" resultMap="ItemResult">
@@ -23,6 +24,11 @@
 <select id="consultarItems" resultMap="ItemResult">
     SELECT * FROM items
 </select>
+
+<insert parameterType="map" id="insertarItem">
+    INSERT INTO VI_ITEMS (id, nombre, descripcion, fechalanzamiento, tarifaxdia, formatorenta, genero, TIPOITEM_id)
+    VALUES (#{id}, #{nombre}, #{descripcion}, #{fechalanzamiento}, #{tarifaxdia}, #{formatorenta}, #{genero}, #{tipoItem.id})
+</insert>
 
 
 </mapper>
