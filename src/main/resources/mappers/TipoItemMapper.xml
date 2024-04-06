@@ -5,11 +5,17 @@
   
 <mapper namespace="edu.unisabana.dyas.sampleprj.dao.mybatis.mappers.TipoItemMapper">
 
+
+<select parameterType="map" id="getTipoItems" resultMap="TipoItemResult">
+select
+ti.id AS tipoitem_id,
+ti.descripcion AS tipoitem_descripcion
+FROM VI_TIPOITEM AS ti
+</select>
+
 <resultMap type="TipoItem" id="TipoItemResult">
   <id property="id" column="ID_TIPO_ITEM"/>
-  <result property="descripcion" column="DESCRIPCION_TIPO_ITEM"/>
-  <association property="item" javaType="Item" resultMap="ItemResult"/>
-
+  <result property="descripcion" column="tipoitem_descripcion"/>
 </resultMap>
                 
 </mapper>
